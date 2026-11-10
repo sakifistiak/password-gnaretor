@@ -1,0 +1,20 @@
+{
+  "name": "keyforge-password-extension",
+  "version": "1.0.0",
+  "description": "Cryptographically secure Manifest V3 browser extension for password & passphrase generation, entropy analysis, HIBP k-anonymity breach checking, and smart autofill.",
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "watch": "node scripts/build.mjs --watch",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "package": "npm run build && cd dist && zip -r ../keyforge-extension.zip ."
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.1.33",
+    "esbuild": "^0.25.4",
+    "typescript": "^5.8.3",
+    "vitest": "^3.2.4"
+  }
+}

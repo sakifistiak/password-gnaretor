@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KeyForge Password Generator</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <main class="app">
+      <header class="header">
+        <div class="brand">
+          <div class="brand-badge" aria-hidden="true">KF</div>
+          <div>
+            <h1>KeyForge</h1>
+            <p class="subtitle">Web Crypto &middot; k-Anonymity</p>
+          </div>
+        </div>
+        <span class="pill" id="entropy-pill">0 bits</span>
+      </header>
+
+      <section class="output-card" aria-label="Generated credential">
+        <div class="password-display" id="password-display" tabindex="0"></div>
+
+        <div class="strength-row">
+          <div class="strength-bar-track" aria-hidden="true">
+            <div class="strength-bar-fill" id="strength-bar"></div>
+          </div>
+          <div class="strength-meta">
+            <span id="strength-label">Strong</span>
+            <span id="crack-time">Centuries+</span>
+          </div>
+        </div>
+
+        <div class="action-row">
+          <button type="button" class="btn btn-primary" id="copy-btn">Copy</button>
+          <button type="button" class="btn btn-secondary" id="regen-btn">Regenerate</button>
+          <button type="button" class="btn btn-secondary" id="fill-btn" title="Fill password field on active tab">
+            Fill Page
+          </button>
+        </div>
+
+        <div class="utility-row">
+          <button type="button" class="btn-link" id="breach-btn">Check HIBP Breach</button>
+          <span class="status-text" id="breach-status">Privacy-preserving SHA-1 prefix check</span>
+        </div>
+        <div class="clipboard-banner hidden" id="clipboard-banner">
+          <span id="clipboard-timer">Clipboard auto-clear in 30s</span>
+          <button type="button" class="btn-link" id="clear-clipboard-btn">Clear now</button>
+        </div>
+      </section>
+
+      <nav class="tabs" role="tablist" aria-label="Generator modes">
+        <button type="button" class="tab active" role="tab" data-tab="password" aria-selected="true">
+          Password
+        </button>
+        <button type="button" class="tab" role="tab" data-tab="passphrase" aria-selected="false">
+          Passphrase
+        </button>
+        <button type="button" class="tab" role="tab" data-tab="history" aria-selected="false">
+          History
+        </button>
+      </nav>
+
+      <section class="panel" id="panel-password" role="tabpanel">
+        <div class="control-group">
+          <div class="range-header">
+            <label for="length-range">Length</label>
+            <strong id="length-value">16</strong>
+          </div>
+          <input type="range" id="length-range" min="8" max="64" value="16" />
+        </div>
+
+        <div class="toggle-grid">
+          <label class="toggle">
+            <input type="checkbox" id="opt-upper" checked />
+            <span>Uppercase (A-Z)</span>
+          </label>
+          <label class="toggle">
+            <input type="checkbox" id="opt-lower" checked />
+            <span>Lowercase (a-z)</span>
+          </label>
+          <label class="toggle">
+            <input type="checkbox" id="opt-numbers" checked />
+            <span>Numbers (0-9)</span>
+          </label>
+          <label class="toggle">
+            <input type="checkbox" id="opt-symbols" checked />
+            <span>Symbols (!@#$...)</span>
+          </label>
+        </div>
+
+        <label class="toggle single-toggle">
+          <input type="checkbox" id="opt-ambiguous" />
+          <span>Exclude ambiguous (0, O, 1, l, I, |)</span>
+        </label>
+      </section>
+
+      <section class="panel hidden" id="panel-passphrase" role="tabpanel">
+        <div class="control-group">
+          <div class="range-header">
+            <label for="words-range">Word count</label>
+            <strong id="words-value">4</strong>
+          </div>
+          <input type="range" id="words-range" min="3" max="10" value="4" />
+        </div>
+
+        <div class="control-group inline-select">
+          <label for="separator-select">Separator</label>
+          <select id="separator-select">
+            <option value="-">Hyphen (-)</option>
+            <option value="_">Underscore (_)</option>
+            <option value=".">Dot (.)</option>
+            <option value=" ">Space ( )</option>
+          </select>
+        </div>
+
+        <div class="toggle-grid">
+          <label class="toggle">
+            <input type="checkbox" id="opt-capitalize" checked />
+            <span>Capitalize words</span>
+          </label>
+          <label class="toggle">
+            <input type="checkbox" id="opt-phrase-num" checked />
+            <span>Include 2-digit number</span>
+          </label>
+        </div>
+      </section>
+
+      <section class="panel hidden" id="panel-history" role="tabpanel">
+        <div class="history-header">
+          <span class="muted">Session-only (cleared on browser close)</span>
+          <button type="button" class="btn-link danger" id="clear-history-btn">Clear all</button>
+        </div>
+        <ul class="history-list" id="history-list"></ul>
+      </section>
+
+      <footer class="footer">
+        <label class="toggle compact">
+          <input type="checkbox" id="opt-autoclear" checked />
+          <span>Auto-clear clipboard (30s)</span>
+        </label>
+        <span class="muted">CSPRNG</span>
+      </footer>
+    </main>
+
+    <script type="module" src="popup.js"></script>
+  </body>
+</html>
